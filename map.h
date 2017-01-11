@@ -18,6 +18,7 @@
 		Map& operator= (const Map&);
 		int& operator[](klucz);
 		void Add (klucz, typ&);
+ 		typ* find (klucz) const;
 		friend ostream& operator<< (ostream& os, const Map &tab){
 			node* temp = tab.head;	
 			while(temp != NULL){
@@ -29,7 +30,7 @@
 			return os;
 		} 
 	    
-    protected:
+    private:
 		struct node;
                 node *head;
 
@@ -37,7 +38,7 @@
 		void swap(Map &);
                 virtual bool porownaj(klucz, klucz)const;
                 
-                node* find (klucz) const;
+               
 
 	        struct node{
 	          node *next;
@@ -54,12 +55,12 @@
 		   // val = v;
 	          }
 	          node (node &x): next(NULL){
-		  if(x.key == NULL)
-		 	key = NULL;
-		  else{
+		//  if(x.key == NULL)
+		// 	key = NULL;
+		//  else{
 			key = x.key;
-		   }
-		   val = new typ(x.val);
+		   
+		   val = new typ(*x.val);
 		  // val = x.val;
 	          }  
 	          ~node(){
@@ -133,11 +134,13 @@
 		return x->val;
 	}
 	template <class klucz, class typ>
-	typename Map<klucz, typ>::node* Map<klucz, typ>::find(klucz key) const{
+	//typename Map<klucz, typ>::typ* Map<klucz, typ>::find(klucz key) const{
+	typ* Map<klucz, typ>::find(klucz key) const{
+
 		node *x = head;
 		while(x){
 		if(porownaj(x->key, key))
-				return x;
+				return x->val;
 			x = x->next;
 		};
 	
